@@ -12,6 +12,10 @@ var paddle1Y;
 var  playerscore =0;
 var audio1;
 var pcscore =0;
+
+rightWristX="";
+rightWristX="";
+rightWristscore="";
 //ball x and y and speedx speed y and radius
 var ball = {
     x:350/2,
@@ -37,10 +41,27 @@ function modelLoaded() {
   console.log("Model Loaded!")
 }
 
+function gotPoses(results)
+{
+  if(results.length > 0)
+  {
+    rightWristX = results[0].pose.nose.x;
+    rightWristY = results[0].pose.nose.y;
+    rightWristscore=results[0].score.nose.y;
+    console.log(results);
+  }
+}
+
 function draw(){
 
   image(video, 0, 0, 350, 350);
         objectDetector.detect(video, gotResults);
+
+if(rightWristscore > 0.2) {
+fill("#0000FF");
+stroke("#FF0000");
+circle(rightWristX, rightWristY, 50);
+}
 
  background(0); 
 
